@@ -161,10 +161,14 @@ class _InputPageState extends State<InputPage> {
                               changedUnits = !changedUnits;
                               if (changedUnits == true) {
                                 chosenUnitOfLength = 'cm';
+                                height = 180;
                                 chosenUnitOfMass = 'kgs';
+                                weight = 69;
                               } else {
                                 chosenUnitOfLength = 'in';
+                                height = 69;
                                 chosenUnitOfMass = 'lbs';
+                                weight = 144;
                               }
                             });
                           },
@@ -235,10 +239,14 @@ class _InputPageState extends State<InputPage> {
                                     changedUnits = !changedUnits;
                                     if (changedUnits == true) {
                                       chosenUnitOfLength = 'cm';
+                                      height = 180;
                                       chosenUnitOfMass = 'kgs';
+                                      weight = 69;
                                     } else {
                                       chosenUnitOfLength = 'in';
+                                      height = 69;
                                       chosenUnitOfMass = 'lbs';
+                                      weight = 144;
                                     }
                                   });
                                 },

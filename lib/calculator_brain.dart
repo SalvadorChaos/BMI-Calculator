@@ -15,10 +15,8 @@ class CalculatorBrain {
 
   String calculateInChosenUnits() {
     if (changedUnits == false) {
-      print('US');
       return bmiCalculateInPoundsAndInches();
     } else {
-      print('UK');
       return bmiCalculateInKilogramsAndCentimeters();
     }
   }
