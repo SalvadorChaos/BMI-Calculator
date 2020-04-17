@@ -1,14 +1,34 @@
 import 'dart:math';
 
 class CalculatorBrain {
-  CalculatorBrain({this.height, this.weight});
+  CalculatorBrain({
+    this.height,
+    this.weight,
+    this.changedUnits,
+  });
 
   final int height;
   final int weight;
+  bool changedUnits = false;
 
   double _bmi;
 
-  String calculateBMI() {
+  String calculateInChosenUnits() {
+    if (changedUnits == false) {
+      print('US');
+      return bmiCalculateInPoundsAndInches();
+    } else {
+      print('UK');
+      return bmiCalculateInKilogramsAndCentimeters();
+    }
+  }
+
+  String bmiCalculateInPoundsAndInches() {
+    _bmi = 703 * weight / pow(height, 2);
+    return _bmi.toStringAsFixed(1);
+  }
+
+  String bmiCalculateInKilogramsAndCentimeters() {
     _bmi = weight / pow(height / 100, 2);
     return _bmi.toStringAsFixed(1);
   }

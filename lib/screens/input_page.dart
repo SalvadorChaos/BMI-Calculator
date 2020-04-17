@@ -21,9 +21,12 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
   Gender selectedGender;
-  int height = 180;
-  int weight = 69;
+  int height = 69;
+  int weight = 144;
   int age = 21;
+  bool changedUnits = false;
+  String chosenUnitOfMass = 'lbs';
+  String chosenUnitOfLength = 'in';
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +82,7 @@ class _InputPageState extends State<InputPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    'Height',
+                    'Weight',
                     style: kTextStyle,
                   ),
                   Row(
@@ -88,13 +91,32 @@ class _InputPageState extends State<InputPage> {
                     textBaseline: TextBaseline.alphabetic,
                     children: <Widget>[
                       Text(
-                        height.toString(),
+                        weight.toString(),
                         style: kNumberStyle,
                       ),
-                      SizedBox(width: 8.0),
-                      Text(
-                        'cm',
-                        style: kTextStyle,
+                      SizedBox(width: 7.5),
+                      Container(
+                        height: 30.0,
+                        width: 30.0,
+                        child: FlatButton(
+                          padding: EdgeInsets.all(0.0),
+                          child: Text(
+                            chosenUnitOfMass,
+                            style: kTextStyle,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              changedUnits = !changedUnits;
+                              if (changedUnits == true) {
+                                chosenUnitOfLength = 'cm';
+                                chosenUnitOfMass = 'kgs';
+                              } else {
+                                chosenUnitOfLength = 'in';
+                                chosenUnitOfMass = 'lbs';
+                              }
+                            });
+                          },
+                        ),
                       ),
                     ],
                   ),
@@ -110,12 +132,12 @@ class _InputPageState extends State<InputPage> {
                           RoundSliderOverlayShape(overlayRadius: 30.0),
                     ),
                     child: Slider(
-                      value: height.toDouble(),
-                      min: 60.0,
-                      max: 240.0,
+                      value: weight.toDouble(),
+                      min: 41.0,
+                      max: 450.0,
                       onChanged: (double newValue) {
                         setState(() {
-                          height = newValue.round();
+                          weight = newValue.round();
                         });
                       },
                     ),
@@ -134,7 +156,7 @@ class _InputPageState extends State<InputPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          'Weight',
+                          'Height',
                           style: kTextStyle,
                         ),
                         Row(
@@ -143,14 +165,33 @@ class _InputPageState extends State<InputPage> {
                           textBaseline: TextBaseline.alphabetic,
                           children: <Widget>[
                             Text(
-                              weight.toString(),
+                              height.toString(),
                               style: kNumberStyle,
                             ),
-                            SizedBox(width: 7.5),
-                            Text(
-                              'kgs',
-                              style: kTextStyle,
-                            )
+                            SizedBox(width: 3.5),
+                            Container(
+                              height: 30.0,
+                              width: 27.0,
+                              child: FlatButton(
+                                padding: EdgeInsets.all(0.0),
+                                child: Text(
+                                  chosenUnitOfLength,
+                                  style: kTextStyle,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    changedUnits = !changedUnits;
+                                    if (changedUnits == true) {
+                                      chosenUnitOfLength = 'cm';
+                                      chosenUnitOfMass = 'kgs';
+                                    } else {
+                                      chosenUnitOfLength = 'in';
+                                      chosenUnitOfMass = 'lbs';
+                                    }
+                                  });
+                                },
+                              ),
+                            ),
                           ],
                         ),
                         Row(
@@ -160,7 +201,7 @@ class _InputPageState extends State<InputPage> {
                               icon: FontAwesomeIcons.minus,
                               onPressed: () {
                                 setState(() {
-                                  weight--;
+                                  height--;
                                 });
                               },
                             ),
@@ -171,7 +212,7 @@ class _InputPageState extends State<InputPage> {
                               icon: FontAwesomeIcons.plus,
                               onPressed: () {
                                 setState(() {
-                                  weight++;
+                                  height++;
                                 });
                               },
                             ),
@@ -244,13 +285,14 @@ class _InputPageState extends State<InputPage> {
               CalculatorBrain calc = CalculatorBrain(
                 height: height,
                 weight: weight,
+                changedUnits: changedUnits,
               );
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) {
                     return ResultsPage(
-                      bmiResult: calc.calculateBMI(),
+                      bmiResult: calc.calculateInChosenUnits(),
                       resultText: calc.getResult(),
                       interpretation: calc.getInterpretation(),
                     );
