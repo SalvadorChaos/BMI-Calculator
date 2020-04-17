@@ -27,12 +27,64 @@ class _InputPageState extends State<InputPage> {
   bool changedUnits = false;
   String chosenUnitOfMass = 'lbs';
   String chosenUnitOfLength = 'in';
+  bool buttonPressed = false;
+  bool loopActive = false;
+
+  void increaseHeightWhilePressed() async {
+    if (loopActive) return;
+    loopActive = true;
+    while (buttonPressed) {
+      setState(() {
+        height++;
+      });
+      await Future.delayed(Duration(milliseconds: 100));
+    }
+    loopActive = false;
+  }
+
+  void decreaseHeightWhilePressed() async {
+    if (loopActive) return;
+    loopActive = true;
+    while (buttonPressed) {
+      setState(() {
+        height--;
+      });
+      await Future.delayed(Duration(milliseconds: 100));
+    }
+    loopActive = false;
+  }
+
+  void increaseAgeWhilePressed() async {
+    if (loopActive) return;
+    loopActive = true;
+    while (buttonPressed) {
+      setState(() {
+        age++;
+      });
+      await Future.delayed(Duration(milliseconds: 100));
+    }
+    loopActive = false;
+  }
+
+  void decreaseAgeWhilePressed() async {
+    if (loopActive) return;
+    loopActive = true;
+    while (buttonPressed) {
+      setState(() {
+        age--;
+      });
+      await Future.delayed(Duration(milliseconds: 100));
+    }
+    loopActive = false;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('BMI Calculator'),
+        title: Center(
+          child: Text('BMI Calculator'),
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -168,7 +220,7 @@ class _InputPageState extends State<InputPage> {
                               height.toString(),
                               style: kNumberStyle,
                             ),
-                            SizedBox(width: 3.5),
+                            SizedBox(width: 1.5),
                             Container(
                               height: 30.0,
                               width: 27.0,
@@ -204,6 +256,13 @@ class _InputPageState extends State<InputPage> {
                                   height--;
                                 });
                               },
+                              onLongPress: () {
+                                buttonPressed = true;
+                                decreaseHeightWhilePressed();
+                              },
+                              onLongPressUp: () {
+                                buttonPressed = false;
+                              },
                             ),
                             SizedBox(
                               width: 10.0,
@@ -214,6 +273,13 @@ class _InputPageState extends State<InputPage> {
                                 setState(() {
                                   height++;
                                 });
+                              },
+                              onLongPress: () {
+                                buttonPressed = true;
+                                increaseHeightWhilePressed();
+                              },
+                              onLongPressUp: () {
+                                buttonPressed = false;
                               },
                             ),
                           ],
@@ -258,6 +324,13 @@ class _InputPageState extends State<InputPage> {
                                   age--;
                                 });
                               },
+                              onLongPress: () {
+                                buttonPressed = true;
+                                decreaseAgeWhilePressed();
+                              },
+                              onLongPressUp: () {
+                                buttonPressed = false;
+                              },
                             ),
                             SizedBox(
                               width: 10.0,
@@ -268,6 +341,13 @@ class _InputPageState extends State<InputPage> {
                                 setState(() {
                                   age++;
                                 });
+                              },
+                              onLongPress: () {
+                                buttonPressed = true;
+                                increaseAgeWhilePressed();
+                              },
+                              onLongPressUp: () {
+                                buttonPressed = false;
                               },
                             ),
                           ],
